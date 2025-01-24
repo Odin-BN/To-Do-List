@@ -7,76 +7,96 @@ interface ToDoModalProps {
 const ToDoModal: React.FC<ToDoModalProps> = ({ onClose }) => {
     const [toDoName, setToDoName] = useState("");
     const [priority, setPriority] = useState("Low");
-    const [deadline, setDeadline] = useState<string | null>(null);
+    const [deadline, setDeadline] = useState("");
+    const [error, setError] = useState("");
 
-    const handleSave = () => {
-        if (toDoName.trim().length === 0){
-            alert("Task name cannot be empty.");
+    const handleSave = async (e: React.FormEvent) => {
+        e.preventDefault();
+
+        if (!toDoName.trim){
+            setError("Task name cannot be empty.");
             return;
         }
         if (toDoName.length > 120){
-            alert("Task name cannot exceed 120 characters.");
+            setError("Task name cannot exceed 120 characters.");
             return;
         }
 
+        setError("");
+
         const newToDo = {
             name: toDoName,
-            priority,
-            deadline,
+            priority: priority,
+            deadline: deadline || null,
         };
 
-        console.log("New Task:", newToDo); //Para verlo en la consola de prueba
+        try {
+            const response = await fetch("http://localhost:9090/api/tasks", {
+                method: "POST",
+                headers: {"Content-Type": "application/json", }, body: JSON.stringify(newToDo),
+            });
 
-        onClose();
-        setToDoName("");
-        setDeadline(null);
-        setPriority("Low");
+            if (!response.ok) {
+                throw new Error("Failed to save task");
+            }
+
+            onClose();
+            setToDoName("");
+            setDeadline("");
+            setPriority("Low");
+
+        }  catch (err) {
+            console.error("Error saving task:", err);
+            setError("Failed to save task. Please try again.")
+        }
+        //console.log("New Task:", newToDo); //Para verlo en la consola de prueba
+        
     };
 
     return (
-        <div className='modal-overlay'>
-            <div className='modal'>
+        <div className='modal-overlay' onClick={onClose}>
+            <div className='modal-content' onClick={(e) => e.stopPropagation()}>
                 <h2>Create a New Task</h2>
+                {error && <p style={{ color: "red" }}>{error}</p>}
+                <form onSubmit={handleSave}>
+                    <div>
+                        <label htmlFor='toDoName'>Task Name (max 120 characters)</label>
+                        <input
+                            type="text"
+                            id="toDoName"
+                            maxLength={120}
+                            value={toDoName}
+                            onChange={(e) => setToDoName(e.target.value)}
+                            required
+                        />
+                    </div>
 
-                {/* Name of the task*/}
-                <label>
-                    Task Name (max 120 characters):
-                    <input
-                        type="text"
-                        value={toDoName}
-                        onChange={(e) => setToDoName(e.target.value)}
-                        maxLength={120}
-                    />
-                </label>
+                    <div>
+                        <label htmlFor='priority'>Priority</label>
+                        <select
+                            id="priority"
+                            value={priority}
+                            onChange={(e) => setPriority(e.target.value)}
+                        >
+                            <option value="Low">Low</option>
+                            <option value="Medium">Medium</option>
+                            <option value="High">High</option>
 
-                {/*Priority*/}
-                <label>
-                    Priority:
-                    <select
-                        value={priority}
-                        onChange={(e) => setPriority(e.target.value)}
-                    >
-                        <option value="Low">Low</option>
-                        <option value="Medium">Medium</option>
-                        <option value="High">High</option>
-                    </select>
-                </label>
+                        </select>
+                    </div>
 
-                {/*Deadline*/}
-                <label>
-                    Deadline (optional):
-                    <input 
-                        type="date"
-                        value={deadline || ""}
-                        onChange={(e) => setDeadline(e.target.value || null)}
-                    />
-                </label>
-
-                {/*Buttons for action*/}
-                <div className='modal-actions'>
-                    <button onClick={handleSave}>Save Task</button>
-                    <button onClick={onClose}>Cancel</button>
-                </div>
+                    <div>
+                        <label htmlFor='deadline'>Deadline</label>
+                        <input
+                            type='data'
+                            id='deadline'
+                            value={deadline}
+                            onChange={(e) => setDeadline(e.target.value)}
+                        />
+                    </div>
+                    <button type="submit">Save Task</button>
+                </form>
+                <button className='close-button' onClick={onClose}>Close</button>
             </div>
         </div>
     );

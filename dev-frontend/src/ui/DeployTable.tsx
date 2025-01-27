@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { Task } from './Task';
 
 interface TableProps {
     //Propiedades de la tabla para mandarle datos
@@ -12,6 +13,20 @@ const DeployTable: React.FC<TableProps> = () => {
         updatedState[rowIndex] = !updatedState[rowIndex];
         setCheckedState(updatedState);
     };
+
+    const [tasks, setTasks] = useState<Task[]>([]);
+
+    useEffect(() => {
+        fetch("http://localhost:9090/todos")
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error("Error al obtener las tareas");
+                }
+                return response.json();
+            })
+            .then((data: Task[]) => setTasks(data))
+            .catch((error) => console.error(error));
+    }, []);
 
     return (
         <table
@@ -45,20 +60,20 @@ const DeployTable: React.FC<TableProps> = () => {
             </thead>
 
             <tbody>
-            {Array.from({length:3}).map((_, rowIndex) => (
-                <tr key={rowIndex}>
+            {tasks.map((task) => (
+                <tr key={task.id} style={{backgroundColor: task.rowColor}}>
                     <td
                     style={{border:"1px solid black", padding: "10px", textAlign: "center"}}>
                         <input 
                         type= "checkbox"
-                        checked={checkedState[rowIndex]}
-                        onChange={() => handleCheckboxChange(rowIndex)}
+                        checked={checkedState[task.id]}
+                        onChange={() => handleCheckboxChange(task.id)}
                         />
                     </td>
-                    <td style={{border:"1px solid black", padding: "10px"}}>Task {rowIndex+1}</td>
-                    <td style={{border:"1px solid black", padding: "10px"}}>Low </td>
-                    <td style={{border:"1px solid black", padding: "10px"}}>2022/02/02</td>
-                    <td style={{border:"1px solid black", padding: "10px"}}>Edit/Delete</td>
+                    <td style={{border:"1px solid black", padding: "10px"}}>{task.name}</td>
+                    <td style={{border:"1px solid black", padding: "10px"}}>{task.priority}</td>
+                    <td style={{border:"1px solid black", padding: "10px"}}>{task.dueDate}</td>
+                    <td style={{border:"1px solid black", padding: "10px"}}>Edit/Remove {task.id}</td>
                 </tr>
             ))}
             </tbody>

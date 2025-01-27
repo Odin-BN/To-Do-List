@@ -1,20 +1,21 @@
 package com.odincode.TasksManagement.model;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class TaskModel {
 
     private Long id;
 
     private String name;  //Limit to max 120 chars.
-    private LocalDate DueDate; //Optional
+    private String DueDate; //Optional
     private Boolean flag; //Done/Undone flag
-    private LocalDate DoneDate; //When the "to do" is marked as done this date is set.
+    private LocalDateTime DoneDate; //When the "to do" is marked as done this date is set.
     private String priority; //High, Medium and Low.
-    private LocalDate CreateDate; //The date the task was created
+    private LocalDateTime CreateDate; //The date the task was created
 
     // Constructor
-    public TaskModel(Long id, String name, LocalDate DueDate, Boolean flag, LocalDate DoneDate, String priority, LocalDate CreateDate){
+    public TaskModel(Long id, String name, String DueDate, Boolean flag, LocalDateTime DoneDate, String priority, LocalDateTime CreateDate){
         this.id = id;
         this.name = name;
         this.DueDate = DueDate;
@@ -42,11 +43,11 @@ public class TaskModel {
         this.name = name;
     }
 
-    public LocalDate getDueDate() {
+    public String getDueDate() {
         return DueDate;
     }
 
-    public void setDueDate(LocalDate dueDate) {
+    public void setDueDate(String dueDate) {
         DueDate = dueDate;
     }
 
@@ -58,11 +59,11 @@ public class TaskModel {
         this.flag = flag;
     }
 
-    public LocalDate getDoneDate() {
+    public LocalDateTime getDoneDate() {
         return DoneDate;
     }
 
-    public void setDoneDate(LocalDate doneDate) {
+    public void setDoneDate(LocalDateTime doneDate) {
         DoneDate = doneDate;
     }
 
@@ -74,11 +75,11 @@ public class TaskModel {
         this.priority = priority;
     }
 
-    public LocalDate getCreateDate() {
+    public LocalDateTime getCreateDate() {
         return CreateDate;
     }
 
-    public void setCreateDate(LocalDate createDate) {
+    public void setCreateDate(LocalDateTime createDate) {
         CreateDate = createDate;
     }
 }

@@ -2,13 +2,13 @@ package com.odincode.TasksManagement.model;
 
 import java.time.LocalDate;
 
-public class TaskM {
+public class TaskAdd {
     private String name;
     private String priority;
-    private LocalDate deadline;
+    private String deadline;
 
 
-    public TaskM(String name, String priority, LocalDate deadline){
+    public TaskAdd(String name, String priority, String deadline){
 
         this.name = name;
         this.priority = priority;
@@ -31,11 +31,11 @@ public class TaskM {
         this.priority = priority;
     }
 
-    public LocalDate getDeadline() {
+    public String getDeadline() {
         return deadline;
     }
 
-    public void setDeadline(LocalDate deadline) {
+    public void setDeadline(String deadline) {
         this.deadline = deadline;
     }
 

@@ -3,10 +3,13 @@ package com.odincode.TasksManagement.repository;
 
 import com.odincode.TasksManagement.model.TaskAdd;
 import com.odincode.TasksManagement.model.TaskModel;
+import com.odincode.TasksManagement.model.TaskOUT;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
@@ -15,6 +18,7 @@ import java.util.concurrent.atomic.AtomicLong;
 public class TaskRepository {
     private final List<TaskModel> taskModels = new ArrayList<>(); //It saves it in the memory
     private final AtomicLong idGenerator = new AtomicLong(1); // It makes every ID with a +1
+    //private String Color = "white";
     //private final LocalDateTime CreateTime;
 
 
@@ -23,7 +27,7 @@ public class TaskRepository {
         //Agregar que elementos valen 0 y asi segun los que ingreso.
         //Descomponerlo aqui al final, buscar como usar el json de input
         //this.CreateTime = LocalDateTime.new();
-        final long ID = idGenerator.getAndIncrement();
+        long ID = idGenerator.getAndIncrement();
         TaskModel newTaskModel = new TaskModel(ID, taskAdd.getName(), taskAdd.getDeadline(), false, null, taskAdd.getPriority(), LocalDateTime.now());
         taskModels.add(newTaskModel);
 
@@ -41,12 +45,33 @@ public class TaskRepository {
     }
 
     //Obtain all tasks
-    public List<TaskModel> findAll(){
+    public List<TaskOUT> findAll(){
         //Tengo que regresar ID, Nombre, Prioridad, fecha limite, flag of Done/undone y color de la casilla.
-        return new ArrayList<>(taskModels);
+        List<TaskOUT> taskOUTs = new ArrayList<>();
+        String Color = "white";
+        for (TaskModel task : taskModels) {
+
+            //Define the color of the row
+            if (task.getDueDate() == null){
+                Color = "white";
+            } else {
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+                LocalDate deadline = LocalDate.parse(task.getDueDate(), formatter);
+                long daysForDeadline = ChronoUnit.DAYS.between(LocalDate.now(), deadline);
+
+                if (daysForDeadline < 8) {
+                    Color = "red";
+                } else if (daysForDeadline < 15 ) {
+                    Color = "yellow";
+                } else {
+                    Color = "green";
+                }
+            }
+
+            taskOUTs.add(new TaskOUT(task.getId(), task.getName(), task.getDueDate(), task.getFlag(), task.getPriority(), Color));
+        }
+        return taskOUTs;
     }
-
-
 
 }
 

@@ -1,6 +1,7 @@
 package com.odincode.TasksManagement.controller;
 
 import com.odincode.TasksManagement.model.TaskModel;
+import com.odincode.TasksManagement.model.TaskOUT;
 import com.odincode.TasksManagement.services.TaskServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -21,19 +22,13 @@ public class TaskController {
     @Autowired
     TaskServices taskServices;
 
-    /*@GetMapping()
-    public ArrayList<TaskModel> obtainTasks(){
+    @GetMapping()
+    public ArrayList<TaskOUT> obtainTasks(){
         return taskServices.obtainTasks();
-    }*/
+    }
 
     @PostMapping()
     public TaskModel saveTask(@RequestBody TaskAdd task){
-
-        /*System.out.println("Task received:");
-        System.out.println("Name: " + task.getName());
-        System.out.println("Priority: " + task.getPriority());
-        System.out.println("Deadline: " + task.getDeadline());*/
-
         return this.taskServices.saveTask(task);
     }
 

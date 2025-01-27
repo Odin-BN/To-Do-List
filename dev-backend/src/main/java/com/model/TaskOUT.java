@@ -1,32 +1,27 @@
 package com.odincode.TasksManagement.model;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-public class TaskModel {
-
+public class TaskOUT {
     private Long id;
-
     private String name;  //Limit to max 120 chars.
     private String DueDate; //Optional
     private boolean flag; //Done/Undone flag
-    private LocalDateTime DoneDate; //When the "to do" is marked as done this date is set.
     private String priority; //High, Medium and Low.
-    private LocalDateTime CreateDate; //The date the task was created
+    private String rowColor;
 
-    // Constructor
-    public TaskModel(Long id, String name, String DueDate, boolean flag, LocalDateTime DoneDate, String priority, LocalDateTime CreateDate){
-        this.id = id;
+
+    public TaskOUT(Long id, String name, String DueDate, boolean flag, String priority, String rowColor){
+
         this.name = name;
-        this.DueDate = DueDate;
-        this.flag = flag;
-        this.DoneDate = DoneDate;
         this.priority = priority;
-        this.CreateDate = CreateDate;
+        this.DueDate = DueDate;
+        this.id = id;
+        this.flag = flag;
+        this.rowColor = rowColor;
     }
 
 
-    // Getters & Setters
     public Long getId() {
         return id;
     }
@@ -51,20 +46,12 @@ public class TaskModel {
         DueDate = dueDate;
     }
 
-    public boolean getFlag() {
+    public boolean isFlag() {
         return flag;
     }
 
     public void setFlag(boolean flag) {
         this.flag = flag;
-    }
-
-    public LocalDateTime getDoneDate() {
-        return DoneDate;
-    }
-
-    public void setDoneDate(LocalDateTime doneDate) {
-        DoneDate = doneDate;
     }
 
     public String getPriority() {
@@ -75,12 +62,12 @@ public class TaskModel {
         this.priority = priority;
     }
 
-    public LocalDateTime getCreateDate() {
-        return CreateDate;
+    public String getRowColor() {
+        return rowColor;
     }
 
-    public void setCreateDate(LocalDateTime createDate) {
-        CreateDate = createDate;
+    public void setRowColor(String rowColor) {
+        this.rowColor = rowColor;
     }
+
 }
-

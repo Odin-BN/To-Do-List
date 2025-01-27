@@ -3,6 +3,7 @@ package com.odincode.TasksManagement.services;
 
 import com.odincode.TasksManagement.model.TaskAdd;
 import com.odincode.TasksManagement.model.TaskModel;
+import com.odincode.TasksManagement.model.TaskOUT;
 import com.odincode.TasksManagement.repository.TaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,8 +18,8 @@ public class TaskServices {
     private final TaskRepository taskRepository = new TaskRepository();
 
     //Despliega todos los tasks
-    public ArrayList<TaskModel> obtainTasks(){
-        return (ArrayList<TaskModel>) taskRepository.findAll();
+    public ArrayList<TaskOUT> obtainTasks(){
+        return (ArrayList<TaskOUT>) taskRepository.findAll();
     }
 
     //Guarda un task

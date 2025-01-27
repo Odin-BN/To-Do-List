@@ -1,12 +1,14 @@
 package com.odincode.TasksManagement.services;
 //Insert logic of the process of the app
 
+import com.odincode.TasksManagement.model.TaskAdd;
 import com.odincode.TasksManagement.model.TaskModel;
 import com.odincode.TasksManagement.repository.TaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 @Service
@@ -20,8 +22,8 @@ public class TaskServices {
     }
 
     //Guarda un task
-    public TaskModel saveTask(String name, LocalDate DueDate, Boolean flag, LocalDate DoneDate, String priority, LocalDate CreateDate){
+    public TaskModel saveTask(TaskAdd taskAdd){
         //TaskModel newTask = new TaskModel(null, name, DueDate, flag, DoneDate, priority, CreateDate);
-        return taskRepository.save(name, DueDate, flag, DoneDate, priority, CreateDate); //Guarda una nueva task
+        return taskRepository.save(taskAdd); //Guarda una nueva task
     }
 }

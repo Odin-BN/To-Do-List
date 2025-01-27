@@ -9,13 +9,13 @@ public class TaskModel {
 
     private String name;  //Limit to max 120 chars.
     private String DueDate; //Optional
-    private Boolean flag; //Done/Undone flag
+    private boolean flag; //Done/Undone flag
     private LocalDateTime DoneDate; //When the "to do" is marked as done this date is set.
     private String priority; //High, Medium and Low.
     private LocalDateTime CreateDate; //The date the task was created
 
     // Constructor
-    public TaskModel(Long id, String name, String DueDate, Boolean flag, LocalDateTime DoneDate, String priority, LocalDateTime CreateDate){
+    public TaskModel(Long id, String name, String DueDate, boolean flag, LocalDateTime DoneDate, String priority, LocalDateTime CreateDate){
         this.id = id;
         this.name = name;
         this.DueDate = DueDate;
@@ -51,11 +51,11 @@ public class TaskModel {
         DueDate = dueDate;
     }
 
-    public Boolean getFlag() {
+    public boolean getFlag() {
         return flag;
     }
 
-    public void setFlag(Boolean flag) {
+    public void setFlag(boolean flag) {
         this.flag = flag;
     }
 

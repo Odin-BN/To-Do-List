@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:8080")
@@ -23,8 +24,13 @@ public class TaskController {
     TaskServices taskServices;
 
     @GetMapping()
-    public ArrayList<TaskOUT> obtainTasks(){
-        return taskServices.obtainTasks();
+    public List<TaskOUT> obtainTasks(
+            @RequestParam(required = false) String NameSearch,
+            @RequestParam(required = false) String PrioritySearch,
+            @RequestParam(required = false) String FlagSearch
+    ){
+        System.out.println("Received parameters - NameSearch: " + NameSearch + ", PrioritySearch: " + PrioritySearch + ", FlagSearch: " + FlagSearch);
+        return taskServices.obtainTasks(NameSearch, PrioritySearch, FlagSearch);
     }
 
     @PostMapping()

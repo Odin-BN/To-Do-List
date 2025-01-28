@@ -1,16 +1,14 @@
-import React, { useState } from "react";
+import React, { useContext } from "react";
+import SearchContext from "../context/SearchContext";
 
-const OptionsStates = () => {
-    const [selectedOptionST, setSelectedOptionST] = useState("All, Done, Undone");
-    const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-        setSelectedOptionST(event.target.value);
-    };
-
+const OptionsStates: React.FC = () => {
+    const { FlagSearch, setflagSearch } = useContext(SearchContext) || {};
+    
     return (
         <div style={{ padding: "0px", position: "absolute", top: "160px", left: "100px"}}>
             <select
-                value={selectedOptionST}
-                onChange={handleChange}
+                value={FlagSearch}
+                onChange={(e) => setflagSearch(e.target.value)}
                 style={{
                     padding: "0px",
                     fontSize: "16px",

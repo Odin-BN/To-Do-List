@@ -1,18 +1,16 @@
-import React, { useState } from "react";
+import React, { useContext } from "react";
+import SearchContext from "../context/SearchContext";
 
-const SearchBox = () => {
-    const [query, setQuery] = useState('');
 
-    const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setQuery(event.target.value);
-    };
+const SearchBox: React.FC= () => {
+    const { NameSearch, setnameSearch } = useContext(SearchContext) || {};
 
     return (
         <div style={{ padding: "0px", position: "absolute",top: "45px", left: "100px",}}>
             <input 
             type="text"
-            value={query}
-            onChange={handleSearch}
+            value={NameSearch}
+            onChange={(e) => setnameSearch(e.target.value)}
             placeholder="text..."
             style={{
                 width: '1500px',
@@ -22,7 +20,7 @@ const SearchBox = () => {
                 borderRadius: '4px',
             }}
             />
-            <p>{/*Se puede ingresar una palabra afuera de las llaves para que diga antes del query*/ query}</p>
+            <p>{/*Se puede ingresar una palabra afuera de las llaves para que diga antes del query*/}</p>
         </div>
 
     )

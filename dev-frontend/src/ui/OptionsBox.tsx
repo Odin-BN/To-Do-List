@@ -1,16 +1,13 @@
-import React, { useState } from "react";
+import React, { useContext } from "react";
+import SearchContext from "../context/SearchContext";
 
-const OptionsBox = () => {
-    const [selectedOption, setSelectedOption] = useState("All, High, Medium, Low");
-    const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-        setSelectedOption(event.target.value);
-    };
-
+const OptionsBox: React.FC = () => {
+    const { PrioritySearch, setprioritySearch } = useContext(SearchContext) || {};
+    
     return (
         <div style={{ padding: "0px", position: "absolute", top: "103px", left: "100px"}}>
             <select
-                value={selectedOption}
-                onChange={handleChange}
+                value={PrioritySearch} onChange={(e) => setprioritySearch(e.target.value)}
                 style={{
                     padding: "0px",
                     fontSize: "16px",

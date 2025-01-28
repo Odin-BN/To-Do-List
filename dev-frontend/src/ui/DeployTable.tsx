@@ -1,12 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Task } from './Task';
 
-interface TableProps {
-    //Propiedades de la tabla para mandarle datos
-}
-
-
-const DeployTable: React.FC<TableProps> = () => {
+const DeployTable: React.FC = () => {
     const [checkedState, setCheckedState]= useState<boolean[]>([false, false, false, false]);
     const handleCheckboxChange = (rowIndex: number) => {
         const updatedState = [...checkedState];
@@ -16,16 +11,21 @@ const DeployTable: React.FC<TableProps> = () => {
 
     const [tasks, setTasks] = useState<Task[]>([]);
 
+    const fetchTasks = async () => {
+        try {
+            const response = await fetch("http://localhost:9090/todos");
+            if (!response.ok) {
+                throw new Error("Error al obtener las tareas");
+            }
+            const data = await response.json();
+            setTasks(data);
+        }   catch (error) {
+            console.error("Error al obtener las tareas:", error);
+        }
+    }
+
     useEffect(() => {
-        fetch("http://localhost:9090/todos")
-            .then((response) => {
-                if (!response.ok) {
-                    throw new Error("Error al obtener las tareas");
-                }
-                return response.json();
-            })
-            .then((data: Task[]) => setTasks(data))
-            .catch((error) => console.error(error));
+        fetchTasks();
     }, []);
 
     return (

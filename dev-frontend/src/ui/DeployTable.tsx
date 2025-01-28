@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import { Task } from './Task';
+import React, { useContext, useState } from 'react';
+import SearchContext from '../context/SearchContext';
+
 
 const DeployTable: React.FC = () => {
     const [checkedState, setCheckedState]= useState<boolean[]>([false, false, false, false]);
@@ -9,7 +10,17 @@ const DeployTable: React.FC = () => {
         setCheckedState(updatedState);
     };
 
-    const [tasks, setTasks] = useState<Task[]>([]);
+    const { tasks } = useContext(SearchContext);
+    
+
+    /*
+    const buildSearchUrl = (NameSearch: string, PrioritySearch: string, FlagSearch: string): string => {
+        let url = "/todos?";
+        if (NameSearch) url += `NameSearch=${encodeURIComponent(NameSearch)}&`
+        if (PrioritySearch && PrioritySearch !== "All") url += `PrioritySearch=${encodeURIComponent(PrioritySearch)}&`;
+        if (FlagSearch && FlagSearch !== "All") url += `FlagSearch=${encodeURIComponent(FlagSearch)}&`;
+        return url.slice(0, -1);
+    };
 
     const fetchTasks = async () => {
         try {
@@ -26,7 +37,7 @@ const DeployTable: React.FC = () => {
 
     useEffect(() => {
         fetchTasks();
-    }, []);
+    }, []);*/
 
     return (
         <table

@@ -1,6 +1,9 @@
 import React, { createContext, useState, ReactNode } from 'react';
+import { Task } from '../ui/Task';
 
 type SearchContextType = {   //type?
+    tasks: Task[];
+    setTasks: React.Dispatch<React.SetStateAction<Task[]>>;
     NameSearch: string;
     PrioritySearch: string;
     FlagSearch: string
@@ -10,6 +13,8 @@ type SearchContextType = {   //type?
 };
 
 const SearchContext = createContext<SearchContextType>({
+    tasks: [],
+    setTasks: () => {},
     NameSearch: "",
     PrioritySearch: "All",
     FlagSearch: "All",
@@ -23,15 +28,17 @@ type SearchProviderProps = {
 };
 
 export const SearchProvider = ({ children }: SearchProviderProps) => {
+    const [tasks, setTasks] = useState<Task[]>([]);
     const [NameSearch, setnameSearch] = useState<string>("");
     const [PrioritySearch, setprioritySearch] = useState<string>("All");
     const [FlagSearch, setflagSearch] = useState<string>("All");
 
     return (
-        <SearchContext.Provider value= {{ NameSearch, PrioritySearch, FlagSearch, setnameSearch, setprioritySearch, setflagSearch}}>
+        <SearchContext.Provider value= {{ tasks, setTasks, NameSearch, PrioritySearch, FlagSearch, setnameSearch, setprioritySearch, setflagSearch}}>
             {children}
         </SearchContext.Provider>
     );
 };
 
 export default SearchContext;
+

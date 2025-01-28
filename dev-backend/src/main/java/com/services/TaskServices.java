@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class TaskServices {
@@ -18,8 +19,32 @@ public class TaskServices {
     private final TaskRepository taskRepository = new TaskRepository();
 
     //Despliega todos los tasks
-    public ArrayList<TaskOUT> obtainTasks(){
-        return (ArrayList<TaskOUT>) taskRepository.findAll();
+    public List<TaskOUT> obtainTasks(String NameSearch, String PrioritySearch, String FlagSearch){
+        List<TaskOUT> tasks = taskRepository.findAll();
+
+        //It filters by name
+        if (NameSearch != null && !NameSearch.isEmpty()){
+            tasks = tasks.stream()
+                    .filter(task -> task.getName().toLowerCase().contains(NameSearch.toLowerCase()))
+                    .toList();
+        }
+
+        //It filters by priority
+        if (PrioritySearch != null && !PrioritySearch.equalsIgnoreCase("All")) {
+            tasks = tasks.stream()
+                    .filter(task -> task.getPriority().equalsIgnoreCase(PrioritySearch))
+                    .toList();
+        }
+
+        //It filters by flag of done/undone
+        if (FlagSearch != null && !FlagSearch.equalsIgnoreCase("All")) {
+            boolean isDone = FlagSearch.equalsIgnoreCase("Done"); //revisar esta linea para revisar el status
+            tasks = tasks.stream()
+                    .filter(task -> task.isFlag() == isDone)
+                    .toList();
+        }
+
+        return tasks;
     }
 
     //Guarda un task

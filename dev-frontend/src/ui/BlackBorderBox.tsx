@@ -2,6 +2,9 @@ import React from 'react';
 import SearchBox from './SearchBox';
 import OptionsBox from './OptionsBox';
 import OptionsStates from './OptionsStates';
+import SearchButton from './SearchButton';
+
+//import NewToDoButton from './NewToDoButton';
 
 const BlackBorderBox: React.FC = () => {
     return (
@@ -24,9 +27,12 @@ const BlackBorderBox: React.FC = () => {
           <div style= {{ marginBottom: "40px"}}> Priority </div>
           <div> State </div>
         </div>
+
+
         <SearchBox/>
         <OptionsBox/>
         <OptionsStates/>
+        <SearchButton />
 
       </div> //en el espacio de arriba puede ir texto
   

@@ -3,7 +3,8 @@ import SearchContext from '../context/SearchContext';
 
 const SearchButton: React.FC = () => {
     //Se usa para acceder a los filtros
-    const { NameSearch, PrioritySearch, FlagSearch } = useContext(SearchContext);
+    const { setTasks, NameSearch, PrioritySearch, FlagSearch } = useContext(SearchContext);
+    
 
     const handleSearch = async () => {
         let searchUrl = "http://localhost:9090/todos?" //PrioritySearch=Medium
@@ -34,7 +35,7 @@ const SearchButton: React.FC = () => {
 
             const data = await response.json();
             console.log("Datos obtenidos:", data);
-            //setTasks(data);
+            setTasks(data);
         }   catch (error) {
             console.error("Error en la busqeuda:", error);
         }

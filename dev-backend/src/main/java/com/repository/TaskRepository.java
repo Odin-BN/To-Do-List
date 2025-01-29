@@ -73,6 +73,17 @@ public class TaskRepository {
         return taskOUTs;
     }
 
+    public TaskModel findById(Long id) {
+        return taskModels.stream()
+                .filter(task -> task.getId().equals((id)))
+                .findFirst()
+                .orElse(null);
+    }
+
+
+    public void deleteById(Long id) {
+        taskModels.removeIf(task -> task.getId().equals(id));
+    }
 }
 
 

@@ -52,4 +52,24 @@ public class TaskServices {
         //TaskModel newTask = new TaskModel(null, name, DueDate, flag, DoneDate, priority, CreateDate);
         return taskRepository.save(taskAdd); //Guarda una nueva task
     }
+
+    public void updateTask(Long id, TaskAdd updatedTask) {
+        TaskModel task = taskRepository.findById(id);
+
+        if (task != null) {
+            if (updatedTask.getName() != null) {
+                task.setName(updatedTask.getName());
+            }
+            if (updatedTask.getPriority() != null) {
+                task.setPriority(updatedTask.getPriority());
+            }
+            task.setDueDate(updatedTask.getDeadline());
+
+        }
+    }
+
+    public void deleteTask(Long id) {
+        taskRepository.deleteById(id);
+    }
+
 }

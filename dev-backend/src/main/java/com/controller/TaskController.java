@@ -2,6 +2,7 @@ package com.odincode.TasksManagement.controller;
 
 import com.odincode.TasksManagement.model.TaskModel;
 import com.odincode.TasksManagement.model.TaskOUT;
+import com.odincode.TasksManagement.model.TaskFlag;
 import com.odincode.TasksManagement.services.TaskServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.config.Task;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:8080")
@@ -52,6 +54,12 @@ public class TaskController {
     public ResponseEntity<Void> deleteTask(@PathVariable Long id) {
         taskServices.deleteTask(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping("/{id}/flag")
+    public ResponseEntity<Void> updateTaskFlag(@PathVariable("id") Long id, @RequestBody TaskFlag taskFlag) {
+        taskServices.updateTaskFlag(id, taskFlag);
+        return ResponseEntity.ok().build();
     }
 
 }

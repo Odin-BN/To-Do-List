@@ -23,12 +23,12 @@ const DeployTable: React.FC = () => {
     const [selectedTask, setSelectedTask] = useState<Task | null>(null);
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-    const [editedTask, setEditedTask] = useState({name: "", priority: "", dueDate: ""})
+    const [editedTask, setEditedTask] = useState({name: "", priority: "", deadline: ""})
 
     //Modal for Editing
     const handleEditClick = (task: Task | any) => {
         setSelectedTask(task);
-        setEditedTask({ name: task.name, priority: task.priority, dueDate: task.dueDate || ""});
+        setEditedTask({ name: task.name, priority: task.priority, deadline: task.dueDate ? task.dueDate : null});
         setIsEditModalOpen(true);
     };
 
@@ -42,7 +42,7 @@ const DeployTable: React.FC = () => {
     const UpdateTasks = async () => {
         if (!selectedTask) return;
         try {
-            await fetch(`http://localhost:9090/${selectedTask.id}`, {
+            await fetch(`http://localhost:9090/todos/${selectedTask.id}`, {
                 method: "PUT",
                 headers: {"Content-Type": "application/json"},
                 body: JSON.stringify(editedTask),
@@ -170,7 +170,7 @@ const DeployTable: React.FC = () => {
                     <td style={{border:"1px solid black", padding: "10px"}}>{task.priority}</td>
                     <td style={{border:"1px solid black", padding: "10px"}}>{task.dueDate}</td>
                     <td style={{border:"1px solid black", padding: "10px"}}>
-                        <button onClick={() => handleEditClick(task)}>Edit/</button>
+                        <button onClick={() => handleEditClick(task)}>Edit</button>
                         <button onClick={() => handleRemoveClick(task)}>Remove</button> 
                     </td>
                 </tr>
@@ -200,8 +200,8 @@ const DeployTable: React.FC = () => {
                     </select>
                     <input
                         type="data"
-                        value={editedTask.dueDate}
-                        onChange={(e) => setEditedTask({...editedTask, dueDate: e.target.value})}
+                        value={editedTask.deadline}
+                        onChange={(e) => setEditedTask({...editedTask, deadline: e.target.value})}
                     />
                     <div>
                         <button onClick={() => setIsEditModalOpen(false)}>Cancel</button>

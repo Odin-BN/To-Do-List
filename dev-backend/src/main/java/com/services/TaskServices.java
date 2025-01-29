@@ -2,6 +2,7 @@ package com.odincode.TasksManagement.services;
 //Insert logic of the process of the app
 
 import com.odincode.TasksManagement.model.TaskAdd;
+import com.odincode.TasksManagement.model.TaskFlag;
 import com.odincode.TasksManagement.model.TaskModel;
 import com.odincode.TasksManagement.model.TaskOUT;
 import com.odincode.TasksManagement.repository.TaskRepository;
@@ -70,6 +71,17 @@ public class TaskServices {
 
     public void deleteTask(Long id) {
         taskRepository.deleteById(id);
+    }
+
+    public void updateTaskFlag(Long id, TaskFlag taskFlag) {
+        TaskModel task = taskRepository.findById(id);
+        task.setFlag(taskFlag.isFlag());
+
+        if (taskFlag.isFlag()) {
+            task.setDoneDate(LocalDateTime.now());
+        } else {
+            task.setDoneDate(null);
+        }
     }
 
 }

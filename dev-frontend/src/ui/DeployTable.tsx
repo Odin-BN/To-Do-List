@@ -4,16 +4,30 @@ import { Task } from './Task';
 
 
 const DeployTable: React.FC = () => {
-    const [checkedState, setCheckedState]= useState<boolean[]>([false, false, false, false]);
-    const handleCheckboxChange = (rowIndex: number) => {
-        const updatedState = [...checkedState];
-        updatedState[rowIndex] = !updatedState[rowIndex];
-        setCheckedState(updatedState);
-    };
-
+    //const [checkedState, setCheckedState]= useState<boolean[]>([false, false, false, false]);
     //Global imports of tasks and functions
     const { fetchTasks } = useContext(SearchContext);
     const { tasks } = useContext(SearchContext) ?? { tasks: []};
+
+    //Send the status flag of the task when clicking a box
+    const handleCheckboxChange = async (taskId: number, taskFlag: boolean) => {
+        try {
+            await fetch(`http://localhost:9090/todos/${taskId}/flag`, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    flag: taskFlag,
+                }),
+            });
+
+            fetchTasks();
+        }  catch (error) {
+            console.error("Error updating task status:", error)
+        }
+    };
+
 
     //To sort the tasks by priority and due date.
     const [sortField, setSortField] = useState<string | null>(null);
@@ -104,7 +118,7 @@ const DeployTable: React.FC = () => {
       })
      : tasks) as Task[];
 
-     const totalPage = Math.ceil(sortedTasks.length / itemsPerPage);
+     const totalPage = Math.ceil(sortedTasks.length / itemsPerPage); //add that it starts in 1
 
      const paginatedTasks = (sortedTasks as Task[]).slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
 
@@ -156,25 +170,32 @@ const DeployTable: React.FC = () => {
             </thead>
 
             <tbody>
-            {(paginatedTasks as Task[]).map((task: Task) => (
-                <tr key={task.id} style={{backgroundColor: task.rowColor}}>
+            {(paginatedTasks as Task[]).map((task: Task) => { 
+                const isCompleted = task.flag;
+                return (
+                <tr key={task.id} style={{backgroundColor: isCompleted ? "white" : task.rowColor, textDecoration: isCompleted ? "line-through" : "none"}}>
                     <td
                     style={{border:"1px solid black", padding: "10px", textAlign: "center"}}>
                         <input 
                         type= "checkbox"
-                        checked={checkedState[task.id]}
-                        onChange={() => handleCheckboxChange(task.id)}
+                        checked={isCompleted}
+                        onChange={(e) => handleCheckboxChange(task.id, e.target.checked)}
                         />
                     </td>
                     <td style={{border:"1px solid black", padding: "10px"}}>{task.name}</td>
                     <td style={{border:"1px solid black", padding: "10px"}}>{task.priority}</td>
                     <td style={{border:"1px solid black", padding: "10px"}}>{task.dueDate}</td>
                     <td style={{border:"1px solid black", padding: "10px"}}>
-                        <button onClick={() => handleEditClick(task)}>Edit</button>
-                        <button onClick={() => handleRemoveClick(task)}>Remove</button> 
+                        {!isCompleted && (
+                            <>
+                                <button onClick={() => handleEditClick(task)}>Edit</button>
+                                <button onClick={() => handleRemoveClick(task)}>Remove</button> 
+                            </>
+                        )}
                     </td>
                 </tr>
-            ))}
+                );
+            })}
             </tbody>
         </table>
 

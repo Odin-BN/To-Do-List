@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import ToDoModal from './ToDoModal'; 
+import SearchContext from '../context/SearchContext';
 
 const NewToDoButton: React.FC = () => {
     const [showModal, setShowModal] = useState(false);
+    const {fetchTasks } = useContext(SearchContext)
 
     return (
         <>
@@ -17,7 +19,7 @@ const NewToDoButton: React.FC = () => {
                 onClick={() => setShowModal(true)}>+ New To Do</button> 
 
             {/*The modal after doing click*/}
-            {showModal && (<ToDoModal onClose={() => setShowModal(false)} /> 
+            {showModal && (<ToDoModal onClose={() => {setShowModal(false); fetchTasks()}} /> 
         )}
       </>
     );

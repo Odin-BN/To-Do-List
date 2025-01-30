@@ -5,7 +5,7 @@ const OptionsStates: React.FC = () => {
     const { FlagSearch, setflagSearch } = useContext(SearchContext) || {};
     
     return (
-        <div style={{ padding: "0px", position: "absolute", top: "160px", left: "100px"}}>
+        <div style={{ padding: "0px", position: "absolute", top: "155px", left: "100px"}}>
             <select
                 value={FlagSearch}
                 onChange={(e) => setflagSearch(e.target.value)}

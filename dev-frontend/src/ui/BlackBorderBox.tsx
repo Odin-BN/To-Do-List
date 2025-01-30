@@ -13,16 +13,16 @@ const BlackBorderBox: React.FC = () => {
           border: "2px solid black",
           padding: "16px",
           width: "1663px",
-          height: "200px",
+          height: "180px",
           textAlign: "center",
           position: "relative",
-          top: "40px",
+          top: "0px",
           //left: "50px",
         }}
       >
         {/* texto para el cuadro*/}
         
-        <div style={{ padding: "10px", textAlign: "left"}}>
+        <div style={{ padding: "0px", textAlign: "left"}}>
           <div style= {{ marginTop: "30px", marginBottom: "40px"}}> Name </div>
           <div style= {{ marginBottom: "40px"}}> Priority </div>
           <div> State </div>

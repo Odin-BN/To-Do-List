@@ -5,7 +5,7 @@ const OptionsBox: React.FC = () => {
     const { PrioritySearch, setprioritySearch } = useContext(SearchContext) || {};
     
     return (
-        <div style={{ padding: "0px", position: "absolute", top: "103px", left: "100px"}}>
+        <div style={{ padding: "0px", position: "absolute", top: "95px", left: "100px"}}>
             <select
                 value={PrioritySearch} onChange={(e) => setprioritySearch(e.target.value)}
                 style={{

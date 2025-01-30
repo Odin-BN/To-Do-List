@@ -9,26 +9,6 @@ const DeployTable: React.FC = () => {
     const { fetchTasks } = useContext(SearchContext);
     const { tasks } = useContext(SearchContext) ?? { tasks: []};
 
-    //Send the status flag of the task when clicking a box
-    const handleCheckboxChange = async (taskId: number, taskFlag: boolean) => {
-        try {
-            await fetch(`http://localhost:9090/todos/${taskId}/flag`, {
-                method: "PUT",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    flag: taskFlag,
-                }),
-            });
-
-            fetchTasks();
-        }  catch (error) {
-            console.error("Error updating task status:", error)
-        }
-    };
-
-
     //To sort the tasks by priority and due date.
     const [sortField, setSortField] = useState<string | null>(null);
     const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
@@ -135,6 +115,41 @@ const DeployTable: React.FC = () => {
         }
     };
 
+    //Send the status flag of the task when clicking a box
+    const handleCheckboxChange = async (taskId: number, taskFlag: boolean) => {
+        try {
+            await fetch(`http://localhost:9090/todos/${taskId}/flag`, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    flag: taskFlag,
+                }),
+            });
+
+            fetchTasks();
+        }  catch (error) {
+            console.error("Error updating task status:", error)
+        }
+    };
+
+
+    //Checkbox for toggle the flag status the tasks cof the current page
+    const areAllTasksCompleted = paginatedTasks.length > 0 && paginatedTasks.every(task => task.flag);
+
+    const handleFlagAllTasks = async () => {
+        try {
+            const taskstoUpdate = paginatedTasks.filter(task => task.flag === areAllTasksCompleted);
+
+            await Promise.all(taskstoUpdate.map(task => handleCheckboxChange(task.id, !areAllTasksCompleted)));
+
+            fetchTasks();
+        }  catch (error) {
+            console.error("Error updating the tasks status:", error);
+        }
+    };
+
     return (
         <div>
         <table
@@ -150,6 +165,11 @@ const DeployTable: React.FC = () => {
             <thead>
                 <tr style={{backgroundColor: "rgb(204, 204, 204)"}}>
                     <th style={{width: "5%", border: "1px solid black", padding: "10px"}}>
+                        <input
+                            type="checkbox"
+                            checked={areAllTasksCompleted}
+                            onChange={handleFlagAllTasks}
+                        />
               
                     </th>
                     <th style={{width: "20%", border: "1px solid black", padding: "10px"}}>

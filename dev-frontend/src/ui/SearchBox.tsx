@@ -6,7 +6,7 @@ const SearchBox: React.FC= () => {
     const { NameSearch, setnameSearch } = useContext(SearchContext) || {};
 
     return (
-        <div style={{ padding: "0px", position: "absolute",top: "45px", left: "100px",}}>
+        <div style={{ padding: "0px", position: "absolute",top: "35px", left: "100px",}}>
             <input 
             type="text"
             value={NameSearch}

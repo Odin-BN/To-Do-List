@@ -60,7 +60,7 @@ const DeployTable: React.FC = () => {
         try {
             await fetch(`http://localhost:9090/todos/${selectedTask.id}`, {method: "DELETE"});
             fetchTasks();
-            fetchAverages();
+            //fetchAverages();
             setIsDeleteModalOpen(false);
         }  catch (error) {
             console.error("Error deleting task: ", error);
@@ -168,7 +168,7 @@ const DeployTable: React.FC = () => {
           width: "97%",
           borderCollapse: "collapse",
           position: "relative",
-          top: "100px",
+          top: "54px",
           //left: "50px",
           border: "1px solid black",
         }}
@@ -233,8 +233,8 @@ const DeployTable: React.FC = () => {
 
         {/* Design of the modal for editing a task */}
         {isEditModalOpen && (
-            <div style={{position: "fixed"}}>
-                <div style={{}}>
+            <div style={{position: "fixed", top: 0, left: 0, width: "100vw", height: "100vh", backgroundColor: "rgba(0, 0, 0, 0.5", zIndex: 999,}}>
+                <div style={{position: "fixed", top: "40%", left: "50%", transform: "translate(-50%, -50%", zIndex: 1000, backgroundColor: "white", padding: "20px", borderRadius: "8px", boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1", width: "400px", maxWidth: "90%",}}>
                     <h2>Edit Task</h2>
                     <input
                         type="text"
@@ -266,10 +266,10 @@ const DeployTable: React.FC = () => {
 
         {/* Design of the modal of confirmation for removing a task */}
         {isDeleteModalOpen && (
-            <div style={{position: "fixed"}}>
-                <div style={{}}>
+            <div style={{position: "fixed", top: 0, left: 0, width: "100vw", height: "100vh", backgroundColor: "rgba(0, 0, 0, 0.5", zIndex: 999,}}>
+                <div style={{position: "fixed", top: "40%", left: "50%", transform: "translate(-50%, -50%", zIndex: 1000, backgroundColor: "white", padding: "20px", borderRadius: "8px", boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1", width: "400px", maxWidth: "90%",}}>
                     <h2>Are you sure you want to delete this task?</h2>
-                    <p>{selectedTask?.name}</p>
+                    <p>{selectedTask?.name}   {selectedTask?.priority}  {selectedTask?.dueDate}</p>
                     <div style={{}}>
                         <button onClick={() => setIsDeleteModalOpen(false)}>Cancel</button>
                         <button onClick={DeleteTasks}>Delete</button>
@@ -280,7 +280,7 @@ const DeployTable: React.FC = () => {
 
 
         {/*Pagination element */}
-        <div style={{ top: "880px", left: "800px", textAlign: "center", position: "absolute"}}>
+        <div style={{ top: "930px", left: "800px", textAlign: "center", position: "absolute"}}>
             <button onClick={goToPreviousPage} disabled={currentPage === 1}>
                 Previuos
             </button>

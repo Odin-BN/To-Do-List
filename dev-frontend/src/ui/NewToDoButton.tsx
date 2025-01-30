@@ -12,7 +12,7 @@ const NewToDoButton: React.FC = () => {
             <button style={{ 
                 padding: "0px", 
                 position: "absolute", 
-                top: "305px", 
+                top: "243px", 
                 width: "140px",
                 height: "40px",
                 textAlign: "center",}} 

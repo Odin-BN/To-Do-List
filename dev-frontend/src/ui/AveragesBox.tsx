@@ -8,13 +8,13 @@ const AveragesBox: React.FC = () => {
         return (
             <div style={{
                 border: "2px solid black",
-                //display: "flex",
+                display: "flex",
                 position: "absolute",
                 justifyContent: "space-between",
                 alignItems: "center",
-                padding: "0px",
+                padding: "5px",
                 borderRadius: "10px",
-                top: "910px",
+                top: "960px",
                 width: "97%",
                 //left: "10px",
             }}>
@@ -22,7 +22,7 @@ const AveragesBox: React.FC = () => {
                     <p>Average time to finish tasks: {averages.total}</p>
                 </div>
 
-                <div style={{ flex: 2, display: "flex", justifyContent: "space-around"}}>
+                <div style={{ flex: 2, display: "flex", justifyContent: "space-evenly"}}>
                     <div>
                         <p>Average time to finish tasks by priority:</p>
                     </div>

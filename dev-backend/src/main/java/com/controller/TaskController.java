@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -60,6 +61,11 @@ public class TaskController {
     public ResponseEntity<Void> updateTaskFlag(@PathVariable("id") Long id, @RequestBody TaskFlag taskFlag) {
         taskServices.updateTaskFlag(id, taskFlag);
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/averages")
+    public ResponseEntity<Map<String, String>> getAverages() {
+        return ResponseEntity.ok(taskServices.calculateAverages());
     }
 
 }

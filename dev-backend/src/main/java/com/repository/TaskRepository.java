@@ -23,7 +23,7 @@ public class TaskRepository {
 
 
     //Save a new task
-    public TaskModel save(TaskAdd taskAdd){
+    public TaskModel save(TaskAdd taskAdd) {
         //Agregar que elementos valen 0 y asi segun los que ingreso.
         //Descomponerlo aqui al final, buscar como usar el json de input
         //this.CreateTime = LocalDateTime.new();
@@ -45,14 +45,14 @@ public class TaskRepository {
     }
 
     //Obtain all tasks
-    public List<TaskOUT> findAll(){
+    public List<TaskOUT> findAll() {
         //Tengo que regresar ID, Nombre, Prioridad, fecha limite, flag of Done/undone y color de la casilla.
         List<TaskOUT> taskOUTs = new ArrayList<>();
         String Color = "white";
         for (TaskModel task : taskModels) {
 
             //Define the color of the row
-            if (task.getDueDate() == null){
+            if (task.getDueDate() == null) {
                 Color = "white";
             } else {
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
@@ -61,7 +61,7 @@ public class TaskRepository {
 
                 if (daysForDeadline < 8) {
                     Color = "red";
-                } else if (daysForDeadline < 15 ) {
+                } else if (daysForDeadline < 15) {
                     Color = "yellow";
                 } else {
                     Color = "green";
@@ -83,6 +83,20 @@ public class TaskRepository {
 
     public void deleteById(Long id) {
         taskModels.removeIf(task -> task.getId().equals(id));
+    }
+
+    public List<TaskModel> findByFlag() {
+        List<TaskModel> tasksCompleted = new ArrayList<>();
+        //String Color = "white";
+        for (TaskModel task : taskModels) {
+
+            //Define the color of the row
+            if (task.getFlag()) {
+                tasksCompleted.add(new TaskModel(task.getId(), task.getName(), task.getDueDate(), task.getFlag(), task.getDoneDate(), task.getPriority(), task.getCreateDate()));
+            }
+        }
+        return tasksCompleted;
+
     }
 }
 

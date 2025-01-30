@@ -1,6 +1,9 @@
 import React, { useContext, useEffect, useState } from 'react';
 import SearchContext from '../context/SearchContext';
 import { Task } from './Task';
+import AverageTimeContext from '../context/AverageTimeContext'
+import AveragesBox from './AveragesBox';
+
 
 
 const DeployTable: React.FC = () => {
@@ -8,6 +11,9 @@ const DeployTable: React.FC = () => {
     //Global imports of tasks and functions
     const { fetchTasks } = useContext(SearchContext);
     const { tasks } = useContext(SearchContext) ?? { tasks: []};
+
+    //Global imports for getting the averages
+    const { fetchAverages } = useContext(AverageTimeContext);
 
     //To sort the tasks by priority and due date.
     const [sortField, setSortField] = useState<string | null>(null);
@@ -54,6 +60,7 @@ const DeployTable: React.FC = () => {
         try {
             await fetch(`http://localhost:9090/todos/${selectedTask.id}`, {method: "DELETE"});
             fetchTasks();
+            fetchAverages();
             setIsDeleteModalOpen(false);
         }  catch (error) {
             console.error("Error deleting task: ", error);
@@ -64,7 +71,7 @@ const DeployTable: React.FC = () => {
     const [currentPage, setCurrentPage] = useState<number>(1);
     const itemsPerPage = 10; 
 
-    useEffect(() => {
+    useEffect(() => { //Add that it only restores the values when the search button is click
         setSortField(null);
         setSortOrder("asc");
         setCurrentPage(1);
@@ -118,6 +125,8 @@ const DeployTable: React.FC = () => {
     //Send the status flag of the task when clicking a box
     const handleCheckboxChange = async (taskId: number, taskFlag: boolean) => {
         try {
+            console.log(`Updating task ${taskId} to flag: ${taskFlag}`);
+
             await fetch(`http://localhost:9090/todos/${taskId}/flag`, {
                 method: "PUT",
                 headers: {
@@ -129,6 +138,7 @@ const DeployTable: React.FC = () => {
             });
 
             fetchTasks();
+            fetchAverages();
         }  catch (error) {
             console.error("Error updating task status:", error)
         }
@@ -145,6 +155,7 @@ const DeployTable: React.FC = () => {
             await Promise.all(taskstoUpdate.map(task => handleCheckboxChange(task.id, !areAllTasksCompleted)));
 
             fetchTasks();
+            fetchAverages();
         }  catch (error) {
             console.error("Error updating the tasks status:", error);
         }
@@ -280,6 +291,12 @@ const DeployTable: React.FC = () => {
                 Next
             </button>
         </div>
+
+
+        {/* Box for show the average time of the tasks */}
+        <AveragesBox/>
+
+
 
         </div>
 

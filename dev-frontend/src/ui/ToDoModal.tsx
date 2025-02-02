@@ -1,4 +1,7 @@
 import React, { useState } from 'react';
+import "./ToDoModal.css"
+
+//Modal for creating a New To Do
 
 interface ToDoModalProps {
     onClose: () => void;  //To close the Modal
@@ -31,7 +34,7 @@ const ToDoModal: React.FC<ToDoModalProps> = ({ onClose }) => {
         };
 
         try {
-            const response = await fetch("http://localhost:9090/api/tasks", {
+            const response = await fetch("http://localhost:9090/todos", {
                 method: "POST",
                 headers: {"Content-Type": "application/json", }, body: JSON.stringify(newToDo),
             });

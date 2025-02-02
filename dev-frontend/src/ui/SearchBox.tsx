@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import SearchContext from "../context/SearchContext";
 
+//Component for the Search box for the Task Name to filter
 
 const SearchBox: React.FC= () => {
     const { NameSearch, setnameSearch } = useContext(SearchContext) || {};
@@ -20,7 +21,7 @@ const SearchBox: React.FC= () => {
                 borderRadius: '4px',
             }}
             />
-            <p>{/*Se puede ingresar una palabra afuera de las llaves para que diga antes del query*/}</p>
+            <p>{/* */}</p>
         </div>
 
     )

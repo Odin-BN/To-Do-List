@@ -1,8 +1,10 @@
 import React, { useContext } from 'react';
 import SearchContext from '../context/SearchContext';
 
+//Component of the search button to call the function to obtain the list of tasks filter
+
 const SearchButton: React.FC = () => {
-    //Se usa para acceder a los filtros
+    
     const { fetchTasks } = useContext(SearchContext);
     
 

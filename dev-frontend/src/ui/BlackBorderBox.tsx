@@ -4,7 +4,7 @@ import OptionsBox from './OptionsBox';
 import OptionsStates from './OptionsStates';
 import SearchButton from './SearchButton';
 
-//import NewToDoButton from './NewToDoButton';
+//Component that integrates all the elements for the filter of the tasks
 
 const BlackBorderBox: React.FC = () => {
     return (
@@ -20,7 +20,7 @@ const BlackBorderBox: React.FC = () => {
           //left: "50px",
         }}
       >
-        {/* texto para el cuadro*/}
+        
         
         <div style={{ padding: "0px", textAlign: "left"}}>
           <div style= {{ marginTop: "30px", marginBottom: "40px"}}> Name </div>
@@ -34,7 +34,7 @@ const BlackBorderBox: React.FC = () => {
         <OptionsStates/>
         <SearchButton />
 
-      </div> //en el espacio de arriba puede ir texto
+      </div> 
   
     );    
   };

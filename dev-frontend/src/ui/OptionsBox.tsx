@@ -1,6 +1,8 @@
 import React, { useContext } from "react";
 import SearchContext from "../context/SearchContext";
 
+//Component of the box with the priority options (All, High, Medium, Low)
+
 const OptionsBox: React.FC = () => {
     const { PrioritySearch, setprioritySearch } = useContext(SearchContext) || {};
     

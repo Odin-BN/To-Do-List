@@ -4,7 +4,7 @@ import { Task } from './Task';
 import AverageTimeContext from '../context/AverageTimeContext'
 import AveragesBox from './AveragesBox';
 
-
+//Table to display the tasks of the list, and also where the sorting and pagination occurs
 
 const DeployTable: React.FC = () => {
     //const [checkedState, setCheckedState]= useState<boolean[]>([false, false, false, false]);
@@ -28,7 +28,7 @@ const DeployTable: React.FC = () => {
     //Modal for Editing
     const handleEditClick = (task: Task | any) => {
         setSelectedTask(task);
-        setEditedTask({ name: task.name, priority: task.priority, deadline: task.dueDate ? task.dueDate : null});
+        setEditedTask({ name: task.name, priority: task.priority, deadline: task.dueDate ? task.dueDate : ""});
         setIsEditModalOpen(true);
     };
 
@@ -77,6 +77,7 @@ const DeployTable: React.FC = () => {
         setCurrentPage(1);
     }, [tasks]);
 
+    //Selecting which category will sort and order
     const handleSort = (field: "priority" | "duedate") => {
         if (sortField === field) {
             setSortOrder(sortOrder === "asc" ? "desc" : "asc");
@@ -86,11 +87,13 @@ const DeployTable: React.FC = () => {
         }
     };
 
+        //Transforms the categories of priority to numnbers in order to use the .sort built-in fuction
     const getPriorityValue = (priority: string) => {
         const priorityMap: { [key: string]: number } = { High: 3, Medium: 2, Low: 1};
         return priorityMap[priority] || 0;
     };
 
+    //Sorting the elements of the list by the chosen category 
     const sortedTasks: Task[] = (sortField
      ? [...tasks].sort((a,b) => {
         let comparison = 0;
@@ -105,17 +108,20 @@ const DeployTable: React.FC = () => {
       })
      : tasks) as Task[];
 
+     //Calculates the total number of pages
      const totalPage = Math.ceil(sortedTasks.length / itemsPerPage); //add that it starts in 1
 
+    //It creates the list of tasks per current page
      const paginatedTasks = (sortedTasks as Task[]).slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
 
+    //Statement to check if the next page button is can be click
      const goToNextPage = () => {
         if (currentPage < totalPage) {
             setCurrentPage(currentPage + 1);
         }
      };
 
-
+    //Statement to check if the previous page button is can be click
     const goToPreviousPage = () => {
         if (currentPage > 1) {
             setCurrentPage(currentPage - 1);
@@ -174,7 +180,7 @@ const DeployTable: React.FC = () => {
         }}
         >
             <thead>
-                <tr style={{backgroundColor: "rgb(204, 204, 204)"}}>
+                <tr style={{backgroundColor: "rgb(209, 204, 204)"}}>
                     <th style={{width: "5%", border: "1px solid black", padding: "10px"}}>
                         <input
                             type="checkbox"

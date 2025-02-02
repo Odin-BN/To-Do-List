@@ -3,6 +3,8 @@ import { it, describe, expect } from "vitest";
 import "@testing-library/jest-dom/vitest";
 import OptionsStates from "../ui/OptionsStates";
 
+//Checks render of the element
+
 describe("OptionsStates", () => {
     it("should render the states options correctly", () => {
         render(<OptionsStates/>);

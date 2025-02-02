@@ -2,6 +2,8 @@ package com.odincode.TasksManagement.model;
 
 import java.time.LocalDateTime;
 
+//Model of the properties of the tasks that are being sent to the front-end to display them on the table
+
 public class TaskOUT {
     private Long id;
     private String name;  //Limit to max 120 chars.

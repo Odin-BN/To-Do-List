@@ -2,6 +2,8 @@ package com.odincode.TasksManagement.model;
 
 import java.time.LocalDate;
 
+//Model for the tasks that are created or edit
+
 public class TaskAdd {
     private String name;
     private String priority;

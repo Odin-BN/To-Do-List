@@ -22,7 +22,7 @@ public class TaskServices {
     @Autowired
     private final TaskRepository taskRepository = new TaskRepository();
 
-    //Despliega todos los tasks
+    //It obtains the list of tasks filter bye name, priority, and status
     public List<TaskOUT> obtainTasks(String NameSearch, String PrioritySearch, String FlagSearch){
         List<TaskOUT> tasks = taskRepository.findAll();
 
@@ -51,12 +51,13 @@ public class TaskServices {
         return tasks;
     }
 
-    //Guarda un task
+    //Saves a task
     public TaskModel saveTask(TaskAdd taskAdd){
         //TaskModel newTask = new TaskModel(null, name, DueDate, flag, DoneDate, priority, CreateDate);
         return taskRepository.save(taskAdd); //Guarda una nueva task
     }
 
+    //It updates the name, priority and due date of a task define on the edit modal
     public void updateTask(Long id, TaskAdd updatedTask) {
         TaskModel task = taskRepository.findById(id);
 
@@ -72,10 +73,12 @@ public class TaskServices {
         }
     }
 
+    //It deletes a task through the id of the task related to the remove button click
     public void deleteTask(Long id) {
         taskRepository.deleteById(id);
     }
 
+    //It changes the state of a task (Done/Undone) when the checkbox is click
     public void updateTaskFlag(Long id, TaskFlag taskFlag) {
         TaskModel task = taskRepository.findById(id);
         task.setFlag(taskFlag.isFlag());
@@ -87,6 +90,7 @@ public class TaskServices {
         }
     }
 
+    //Calculates the averages to display (total, low, medium and high)
     public Map<String, String> calculateAverages() {
         List<TaskModel> completedTasks = taskRepository.findByFlag();
 
@@ -108,12 +112,14 @@ public class TaskServices {
         );
     }
 
+    //It filters the list of tasks by priority for the averages per priority
     private List<TaskModel> filterByPriority(List<TaskModel> tasks, String priority) {
         return tasks.stream()
                 .filter(task -> priority.equals(task.getPriority()))
                 .collect(Collectors.toList());
     }
 
+    //Gets the average time completion of the tasks by priority, using the built-in Duration.between of the two date of type LocalDateTime
     private Duration getAverageCompletionTime (List<TaskModel> tasks) {
         if (tasks.isEmpty()) {
             return Duration.ZERO;
@@ -124,6 +130,7 @@ public class TaskServices {
         return Duration.ofSeconds(totalSeconds / tasks.size());
     }
 
+    //Transforms the result in string to send it back to the front-end without problems
     private String formatDuration(Duration duration) {
         long days = duration.toDays();
         long hours = duration.toHours() % 24;

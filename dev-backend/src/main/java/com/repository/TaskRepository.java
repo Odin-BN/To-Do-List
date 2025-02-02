@@ -22,10 +22,8 @@ public class TaskRepository {
     //private final LocalDateTime CreateTime;
 
 
-    //Save a new task
+    //Saves a new task
     public TaskModel save(TaskAdd taskAdd) {
-        //Agregar que elementos valen 0 y asi segun los que ingreso.
-        //Descomponerlo aqui al final, buscar como usar el json de input
         //this.CreateTime = LocalDateTime.new();
         long ID = idGenerator.getAndIncrement();
         TaskModel newTaskModel = new TaskModel(ID, taskAdd.getName(), taskAdd.getDeadline(), false, null, taskAdd.getPriority(), LocalDateTime.now());
@@ -73,6 +71,7 @@ public class TaskRepository {
         return taskOUTs;
     }
 
+    //Finds a task by its id
     public TaskModel findById(Long id) {
         return taskModels.stream()
                 .filter(task -> task.getId().equals((id)))
@@ -80,17 +79,18 @@ public class TaskRepository {
                 .orElse(null);
     }
 
-
+    //Deletes a task from the list by its id
     public void deleteById(Long id) {
         taskModels.removeIf(task -> task.getId().equals(id));
     }
 
+    //Finds the tasks from the State selected
     public List<TaskModel> findByFlag() {
         List<TaskModel> tasksCompleted = new ArrayList<>();
-        //String Color = "white";
+
         for (TaskModel task : taskModels) {
 
-            //Define the color of the row
+
             if (task.getFlag()) {
                 tasksCompleted.add(new TaskModel(task.getId(), task.getName(), task.getDueDate(), task.getFlag(), task.getDoneDate(), task.getPriority(), task.getCreateDate()));
             }

@@ -3,6 +3,8 @@ package com.odincode.TasksManagement.model;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+//Model for the properties of the tasks
+
 public class TaskModel {
 
     private Long id;

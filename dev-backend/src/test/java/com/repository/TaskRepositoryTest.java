@@ -26,6 +26,7 @@ public class TaskRepositoryTest {
     private TaskRepository taskRepository;
 
     @Test
+    //Tests the function to save a task
     public void shouldSaveTask() {
 
         TaskAdd taskAdd = new TaskAdd("", "", "");
@@ -41,6 +42,7 @@ public class TaskRepositoryTest {
     }
 
     @Test
+    //Tests the function to find a task by the id
     public void shouldFindTaskById() {
 
         TaskAdd task = new TaskAdd("Test Task2", "", "");
@@ -52,6 +54,7 @@ public class TaskRepositoryTest {
     }
 
     @Test
+    //Tests the function to obtain all the tasks
     public void shouldFindAllTasks() {
 
         taskRepository.save(new TaskAdd("Test Task3", "", null));

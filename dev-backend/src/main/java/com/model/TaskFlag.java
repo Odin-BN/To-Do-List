@@ -1,5 +1,7 @@
 package com.odincode.TasksManagement.model;
 
+//Model with the property of flag (true/false -> Done/Undone(
+
 public class TaskFlag {
     //private Long id;
     private boolean flag;

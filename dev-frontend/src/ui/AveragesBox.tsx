@@ -1,6 +1,8 @@
 import React, { useContext } from "react";
 import AverageTimeContext from '../context/AverageTimeContext'
 
+//Bottom component to show the averages form the completed tasks
+
 const AveragesBox: React.FC = () => {
         //Global imports for getting the averages
         const { averages } = useContext(AverageTimeContext);

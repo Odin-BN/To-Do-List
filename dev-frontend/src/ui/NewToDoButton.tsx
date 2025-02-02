@@ -2,6 +2,8 @@ import React, { useContext, useState } from 'react';
 import ToDoModal from './ToDoModal'; 
 import SearchContext from '../context/SearchContext';
 
+//Component of the button to create a new To Do
+
 const NewToDoButton: React.FC = () => {
     const [showModal, setShowModal] = useState(false);
     const {fetchTasks } = useContext(SearchContext)

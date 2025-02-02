@@ -1,6 +1,8 @@
 import React, { useContext } from "react";
 import SearchContext from "../context/SearchContext";
 
+//Component of the box with the Status options (All, Done, Undone)
+
 const OptionsStates: React.FC = () => {
     const { FlagSearch, setflagSearch } = useContext(SearchContext) || {};
     

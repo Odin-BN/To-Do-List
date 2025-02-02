@@ -3,6 +3,8 @@ import { it, describe, expect } from "vitest";
 import "@testing-library/jest-dom/vitest";
 import OptionsBox from "../ui/OptionsBox";
 
+//Checks render of the element
+
 describe("OptionsBox", () => {
     it("should render the priority options correctly", () => {
         render(<OptionsBox/>);

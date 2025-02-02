@@ -1,5 +1,7 @@
 import React, { createContext, useState } from "react";
 
+//Global context for calculating the Completion TIme Average of the tasks
+
 type AverageTimeType = {
     averages: {
         total: string;
@@ -11,7 +13,7 @@ type AverageTimeType = {
 }
 
 const AverageTimeContext = createContext<AverageTimeType>({
-    averages: {total: "Test1", low: "Test2", medium: "Test3", high: "Test4"},
+    averages: {total: "N/A", low: "N/A", medium: "N/A", high: "N/A"},
     fetchAverages: () => {},
 });
 
